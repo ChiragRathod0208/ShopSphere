@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere | Premium Bags</title>
+    <link rel="stylesheet" href="/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+    <!-- Toast Container -->
+    <!-- <div id="toast-container"
+        class="fixed w-full top-20 z-50 space-y-3">
+    </div> -->
+
+    <nav class="fixed top-0 z-50 w-full bg-white border-b border-blue-100 shadow-sm">
+        <div class="px-4 py-3 flex items-center justify-between">
+
+            <!-- LEFT: Menu button + logo -->
+            <div class="flex items-center gap-3">
+                <!-- Mobile menu button -->
+                <button onclick="toggleSidebar()" class="sm:hidden text-blue-600">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <span class="text-2xl font-bold text-blue-600">
+                    Solo<span class="text-slate-800">Store</span>
+                </span>
+            </div>
+
+            <!-- RIGHT: User -->
+            <div class="relative">
+                <% if (user.name != "guest") { %>
+                    <button onclick="toggleUserMenu()" class="flex items-center gap-2">
+                        <span class="hidden sm:block text-slate-500">
+                            Welcome, <strong><%= user.name %></strong>
+                        </span>
+                        <i class="fa-solid fa-user text-xl text-blue-500"></i>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div id="userMenu"
+                        class="hidden absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-md">
+                        <a href="/auth/logout"
+                        class="block px-4 py-2 text-sm text-red-500 hover:bg-red-50 rounded-lg">
+                            Logout
+                        </a>
+                    </div>
+                <% } else { %>
+                    <a href="/auth" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        login
+                    </a>
+                <% } %>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <aside id="sidebar"
+       class="fixed left-0 top-0 z-40 w-64 h-screen pt-20
+              -translate-x-full sm:translate-x-0
+              transition-transform duration-300
+              bg-blue-50 border-r border-blue-100">
+        <div class="h-full px-3 py-4 overflow-y-auto">
+            <ul class="space-y-2 font-medium">
+                <% if (user.role != "admin") { %>
+                    <li>
+                        <button onclick="loadProducts()" class="flex items-center w-full p-3 text-blue-900 rounded-lg hover:bg-white group transition">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                            <span class="ml-3">Our Products</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="viewCart()" class="flex items-center w-full p-3 text-blue-900 rounded-lg hover:bg-white group transition">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9M10 21h4" />
+                            </svg>
+                            <span class="ml-3">My Cart</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="getOrders()" class="flex items-center w-full p-3 text-blue-900 rounded-lg hover:bg-white group transition">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            <span class="ml-3">My Orders</span>
+                        </button>
+                    </li>
+                <% } else { %>
+                    <li>
+                        <button onclick="productList()" class="flex items-center w-full p-3 text-blue-900 rounded-lg hover:bg-white group transition">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                            <span class="ml-3">Product List</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="addProduct()" class="flex items-center w-full p-3 text-blue-900 rounded-lg hover:bg-white group transition">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            <span class="ml-3">Add Product</span>
+                        </button>
+                    </li>
+                <% } %>    
+                <% if (user && user.role === 'admin') { %>
+                <li class="pt-4 mt-4 border-t border-blue-200">
+                    <span class="px-3 text-xs font-semibold text-blue-400 uppercase">Admin Panel</span>
+                </li>
+                <li>
+                        <button onclick="getAllOrders()" class="flex items-center w-full p-3 text-blue-900 rounded-lg hover:bg-white group transition">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            <span class="ml-3">Get All Orders</span>
+                        </button>
+                    </li>
+                <!-- <li>
+                    <button onclick="loadContent('admin-dashboard')" class="flex items-center w-full p-3 text-blue-900 rounded-lg hover:bg-white group transition">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+                        <span class="ml-3">Manage Accounts</span>
+                    </button>
+                </li> -->
+                <% } %>
+            </ul>
+        </div>
+    </aside>
+
+    <div class="p-4 sm:ml-64">
+        <div id="toast-container"
+            class="fixed w-[78%] top-20 z-50 space-y-3">
+        </div>
+        <div id="main-content" class="p-8 mt-14 min-h-[calc(100vh-160px)] bg-white rounded-xl shadow-sm border border-blue-50">
+            <%- //include('partials/_productView') %>
+        </div>
+
+        <footer class="mt-8 py-6 text-center text-slate-400 text-sm border-t border-blue-50">
+            <p>&copy; 2024 SoloStore Inc. Built with Node.js & Tailwind.</p>
+        </footer>
+    </div>
+
+
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/JS/layout.js"></script>
+    <script>
+        function showToast(message, type = "success") {
+            // console.log(toast);
+            let colors = {
+            success: "bg-green-100 text-green-700 border-green-300",
+            error: "bg-red-100 text-red-700 border-red-300",
+            info: "bg-blue-100 text-blue-700 border-blue-300"
+            };
+
+            let toast = $(`
+            <div class="flex items-center gap-3 px-4 py-3 rounded-lg border shadow-sm
+                        ${colors[type]} animate-slide-in">
+                <span class="text-sm font-medium">${message}</span>
+                <button class="ml-auto text-lg font-bold">&times;</button>
+            </div>
+            `);
+
+            $("#toast-container").append(toast);
+
+            // Remove on close click
+            toast.find("button").click(() => toast.fadeOut(300, () => toast.remove()));
+
+            // Auto remove after 3s
+            setTimeout(() => {
+            toast.fadeOut(300, () => toast.remove());
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>

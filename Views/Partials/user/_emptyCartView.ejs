@@ -1,0 +1,41 @@
+<div class="flex items-center justify-center min-h-[60vh] px-4">
+
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-sm border border-blue-100 p-8 text-center">
+
+        <!-- Cart Icon -->
+        <div class="flex justify-center mb-6">
+            <div class="w-20 h-20 flex items-center justify-center rounded-full bg-blue-50">
+                <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4
+                             M7 13L5.4 5M7 13l-2 9m12-9l2 9
+                             M9 21h6" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-xl font-semibold text-slate-800">
+            Your cart is empty
+        </h2>
+
+        <!-- Description -->
+        <p class="mt-2 text-slate-500 text-sm">
+            Looks like you haven’t added anything to your cart yet.
+            Start shopping to fill it up!
+        </p>
+
+        <!-- Action Button -->
+        <div class="mt-6">
+            <button
+                onclick="loadProducts()"
+                class="w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-lg
+                       hover:bg-blue-700 transition font-medium">
+                Browse Products
+            </button>
+        </div>
+
+    </div>
+
+</div>

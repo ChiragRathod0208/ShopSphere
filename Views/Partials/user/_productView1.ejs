@@ -1,0 +1,66 @@
+<div class="w-full">
+
+        <!-- <div class="h-[10%] relative flex items-center bg-green-500 px-5 p-3 z-10 to-transparent"><%= //success %>success</div> -->
+    <!-- PAGE HEADER -->
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800">Our Products</h1>
+            <p class="text-sm text-slate-500">Premium bags crafted for everyday use</p>
+        </div>
+
+        <!-- SORT DROPDOWN -->
+             <select onchange="loadProducts(this.value)" id="productsortddl" class="w-44 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                 <option>Sort by</option>
+                 <option value="asc">Price: Low to High</option>
+                 <option value="desc">Price: High to Low</option>
+             </select>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <% products.forEach(product => { %>
+
+        <div class="group h-full bg-white border border-slate-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+
+            <!-- PRODUCT IMAGE -->
+            <div class="h-[70%] flex items-center justify-center">
+                <img src="<%= product.image %>"
+                    class="h-full object-cover w-full object-center"
+                    alt="<%= product.name %>">
+                <!-- <span class="text-slate-400 text-sm">Product Image</span> -->
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="p-4 space-y-3">
+
+                <h3 class="font-semibold text-slate-800 truncate">
+                    <%= product.name %>
+                </h3>
+
+                <div class="flex items-center justify-between">
+                    <span class="text-lg font-bold text-slate-900">
+                        ₹ <%= product.price %>
+                    </span>
+                </div>
+
+                <!-- ACTION BUTTON -->
+                <form action="/cart/addToCart" onsubmit="addToCart(event)">
+                    <input type="text" name="pid" value="<%= product._id %>" hidden>
+                    <button type="submit" class="w-full mt-2 flex items-center justify-center gap-2 rounded-lg bg-blue-600 text-white py-2 text-sm font-medium hover:bg-blue-700 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9M10 21h4" />
+                        </svg>
+                        Add to Cart
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <% }) %>
+
+    </div>
+
+</div>
