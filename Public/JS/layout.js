@@ -1,6 +1,3 @@
-
-//========== Client Side Scripts ==========
-
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('-translate-x-full');
@@ -11,7 +8,6 @@ function toggleUserMenu() {
     menu.classList.toggle('hidden');
 }
 
-// Close dropdown when clicking outside
 document.addEventListener('click', function (e) {
     const menu = document.getElementById('userMenu');
     if (!menu) return;
@@ -20,39 +16,6 @@ document.addEventListener('click', function (e) {
         menu.classList.add('hidden');
     }
 });
-
-//========== AJAX functions ========== 
-
-// $(document).on("submit", "#addProductForm", (e) => {
-//     e.preventDefault();
-
-//     let form = $('addProductForm');
-
-//     console.log("Form Data : ", form.serialize());
-//     if(!confirm("Confirm"))
-//         return;
-        
-
-//     $.ajax({
-//         type: 'POST',
-//         url: '/admin/addProduct',
-//         data: form.serialize(),
-//         success: function(response){
-//             alert("Product Added Successfully...");
-//             loadProducts();
-//         },
-//         error: function(err){
-//             alert("Product Can't Be Added...");
-//             console.log(err);
-//         }
-//     })
-// });
-
-// $("#addProductForm").on('submit' , (e) => {
-//    alert("Hellooooooooo"); 
-//    return;
-// });
-
 
 function viewCart() {
 
@@ -106,8 +69,6 @@ function getOrders()
     {
         window.location.href = "/auth";
     }
-    // event.preventDefault();
-
 
     $.ajax({
         type: 'GET',
@@ -140,8 +101,6 @@ function addToCart(event) {
 
     let token = decodeURIComponent(document.cookie);
     
-    // console.log("Token :",token);
-
     if(token === 'token=' || !token)
     {
         window.location.href = "/auth";
@@ -164,19 +123,11 @@ function addToCart(event) {
     })    
 }
 
-
-// ===================================
-// Submit Add Product
-// ===================================
-
-
 function submitAddProduct(event) {
     event.preventDefault();
 
     const form = document.getElementById('addProductForm');
     const formData = new FormData(form);
-
-    console.log("Form Data: ", formData);
 
     $.ajax({
         type: 'POST',
@@ -194,13 +145,6 @@ function submitAddProduct(event) {
         }
     });
 }
-
-
-
-// =====================================
-// Submit update product
-// =====================================
-
 
 function submitEditProduct(event)
 {
@@ -234,33 +178,15 @@ function loadProducts(para = "asc") {
         url: `/product/${para}`,
         success: function (data) {
             $('#main-content').html(data);
-            // if(referringUrl === 'http://localhost:8000/auth')
-            //     showToast("You've Logged In", "success");
-            // if( getCookie('logout') === 'true')
-            //     showToast("You've Loggedout Successfully", "success");
         }
     });
 }
 
-
-// =========================================
-// logout method
-// =========================================
-
 function getCookie(name) {
-    // Split cookies by semicolon and space
     const cookies = document.cookie.split('; ');
-    // Find the one that starts with the target name
     const target = cookies.find(row => row.startsWith(name + '='));
-    // Return the value part or null if not found
     return target ? target.split('=')[1] : null;
 }
-
-// // Print the 'logout' cookie value
-// const logoutValue = getCookie('logout');
-// console.log("Logout Cookie Value:", logoutValue);
-
-
 
 function addProduct() {
     $.ajax({
@@ -317,13 +243,5 @@ function productList() {
     });
 };
 
-// $(document).ready(() => {
-//     $('#productsortddl').on('change', () => {
-//         alert("Hello");
-//     })
-// })
-
-// console.log("Drop Down : ", $('#productsortddl'));
 let dl = document.getElementById('productsortddl')
-console.log("Drop Down : ", dl);
 loadProducts();

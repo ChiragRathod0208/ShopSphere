@@ -37,15 +37,16 @@ async function viewOrders(req, res) {
     const user = req.user._id;
 
     let orderData = await orderModel.find({user: user})
-        .populate("user", "name email");
+        .populate("user", "name email")
+        .sort({ createdAt: -1 });
 
-        orderData.forEach((order, idx) => {
-            console.log("Oreder : ", idx + 1);
-            order.Items.forEach((item) => {
-                console.log("Item Name : ", item.name);
-                console.log("Item image : ", item.image);
-            })
-        })
+        // orderData.forEach((order, idx) => {
+        //     console.log("Oreder : ", idx + 1);
+        //     order.Items.forEach((item) => {
+        //         console.log("Item Name : ", item.name);
+        //         console.log("Item image : ", item.image);
+        //     })
+        // })
 
     return res.render('Partials/user/_myOrderView', { layout: req.layout , orders: orderData});
 }
